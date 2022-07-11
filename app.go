@@ -54,10 +54,11 @@ type App struct {
 	initHook  func(a *App, flags FlagMap) error
 	shellHook func(a *App) error
 
-	printHelp        func(a *App, shell bool)
-	printCommandHelp func(a *App, cmd *Command, shell bool)
-	interruptHandler func(a *App, count int)
-	printASCIILogo   func(a *App)
+	printHelp            func(a *App, shell bool)
+	printCommandHelp     func(a *App, cmd *Command, shell bool)
+	interruptHandler     func(a *App, count int)
+	printASCIILogo       func(a *App)
+	noFindCommandHandler func(a *App, args []string) error
 }
 
 // New creates a new app.
@@ -94,6 +95,10 @@ func New(c *Config) (a *App) {
 	}
 
 	return
+}
+
+func (a *App) SetNoFindCommandHandler(handler func(a *App, args []string) error) {
+	a.noFindCommandHandler = handler
 }
 
 // SetPrompt sets a new prompt.
@@ -242,6 +247,9 @@ func (a *App) RunCommand(args []string) error {
 	if err != nil {
 		return err
 	} else if len(cmds) == 0 {
+		if a.noFindCommandHandler != nil {
+			return a.noFindCommandHandler(a, args)
+		}
 		return fmt.Errorf("unknown command, try 'help'")
 	}
 
@@ -282,7 +290,9 @@ func (a *App) RunCommand(args []string) error {
 // This method blocks.
 func (a *App) Run() (err error) {
 	// Create the readline instance.
-	config := &readline.Config{}
+	config := &readline.Config{
+		RuneInputHandler: a.config.RuneInputHandler,
+	}
 	a.setReadlineDefaults(config)
 	rl, err := readline.NewEx(config)
 	if err != nil {
@@ -415,6 +425,7 @@ func (a *App) setReadlineDefaults(config *readline.Config) {
 	config.HistoryLimit = a.config.HistoryLimit
 	config.AutoComplete = newCompleter(&a.commands)
 	config.VimMode = a.config.VimMode
+	config.RuneInputHandler = a.config.RuneInputHandler
 }
 
 func (a *App) runShell() error {

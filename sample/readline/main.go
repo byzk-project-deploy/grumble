@@ -1,9 +1,10 @@
 package main
 
 import (
+	"time"
+
 	"github.com/desertbit/grumble"
 	"github.com/desertbit/readline"
-	"time"
 )
 
 func main() {
