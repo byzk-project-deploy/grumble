@@ -26,6 +26,7 @@ package grumble
 
 import (
 	"fmt"
+	"io"
 
 	"github.com/fatih/color"
 )
@@ -79,6 +80,8 @@ type Config struct {
 
 	// RuneInputHandler 字符输入拦截器, 返回true继续向下匹配, 返回false进行拦截
 	RuneInputHandler func(r rune) bool
+
+	Stdin io.ReadCloser
 }
 
 // SetDefaults sets the default values if not set.

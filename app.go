@@ -426,6 +426,7 @@ func (a *App) setReadlineDefaults(config *readline.Config) {
 	config.AutoComplete = newCompleter(&a.commands)
 	config.VimMode = a.config.VimMode
 	config.RuneInputHandler = a.config.RuneInputHandler
+	config.Stdin = a.config.Stdin
 }
 
 func (a *App) runShell() error {
