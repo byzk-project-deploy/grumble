@@ -363,15 +363,16 @@ func (a *App) RunWithReadline(rl *readline.Instance) (err error) {
 	// Ensure to add all commands before running the init hook.
 	// If the init hook does something with the app commands, then these should also be included.
 	if a.isShell {
-		a.AddCommand(&Command{
-			Name: "exit",
-			Help: "exit the shell",
-			Run: func(c *Context) error {
-				c.Stop()
-				return nil
-			},
-			isBuiltin: true,
-		})
+		// a.commands.FindCommand([]string{"exit"})
+		// a.AddCommand(&Command{
+		// 	Name: "exit",
+		// 	Help: "exit the shell",
+		// 	Run: func(c *Context) error {
+		// 		c.Stop()
+		// 		return nil
+		// 	},
+		// 	isBuiltin: true,
+		// })
 		a.AddCommand(&Command{
 			Name: "clear",
 			Help: "clear the screen",
