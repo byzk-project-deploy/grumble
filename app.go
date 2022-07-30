@@ -234,7 +234,10 @@ func (a *App) addCommand(cmd *Command, addHelpFlag bool) {
 	if err != nil {
 		panic(err)
 	}
-	cmd.registerFlagsAndArgs(addHelpFlag)
+	if !cmd.registryOk {
+		cmd.registerFlagsAndArgs(addHelpFlag)
+		cmd.registryOk = true
+	}
 
 	a.commands.Add(cmd)
 }

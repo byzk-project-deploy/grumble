@@ -67,11 +67,12 @@ type Command struct {
 	// A non-nil Completer overrides the default behaviour.
 	Completer func(prefix string, args []string) []string
 
-	parent    *Command
-	flags     Flags
-	args      Args
-	commands  Commands
-	isBuiltin bool // Whenever this is a build-in command not added by the user.
+	parent     *Command
+	flags      Flags
+	args       Args
+	commands   Commands
+	isBuiltin  bool // Whenever this is a build-in command not added by the user.
+	registryOk bool
 }
 
 func (c *Command) validate() error {
@@ -113,7 +114,10 @@ func (c *Command) AddCommand(cmd *Command) {
 	}
 
 	cmd.parent = c
-	cmd.registerFlagsAndArgs(true)
+	if !cmd.registryOk {
+		cmd.registerFlagsAndArgs(true)
+		cmd.registryOk = true
+	}
 
 	c.commands.Add(cmd)
 }
