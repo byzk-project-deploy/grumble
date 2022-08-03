@@ -1,6 +1,6 @@
 module github.com/byzk-project-deploy/grumble
 
-go 1.12
+go 1.18
 
 require (
 	github.com/Netflix/go-expect v0.0.0-20190729225929-0e00d9168667 // indirect
