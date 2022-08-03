@@ -3,8 +3,8 @@ package main
 import (
 	"time"
 
-	"github.com/desertbit/grumble"
-	"github.com/desertbit/readline"
+	"github.com/byzk-project-deploy/grumble"
+	"github.com/byzk-project-deploy/readline"
 )
 
 func main() {

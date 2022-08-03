@@ -30,9 +30,9 @@ import (
 	"os"
 	"strings"
 
+	"github.com/byzk-project-deploy/readline"
 	"github.com/desertbit/closer/v3"
 	shlex "github.com/desertbit/go-shlex"
-	"github.com/desertbit/readline"
 	"github.com/fatih/color"
 )
 

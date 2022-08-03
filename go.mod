@@ -1,14 +1,14 @@
-module github.com/desertbit/grumble
+module github.com/byzk-project-deploy/grumble
 
 go 1.12
 
 require (
 	github.com/Netflix/go-expect v0.0.0-20190729225929-0e00d9168667 // indirect
+	github.com/byzk-project-deploy/readline v1.5.2-0.20220803055751-5f5bd48126bb
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/desertbit/closer/v3 v3.1.2
 	github.com/desertbit/columnize v2.1.0+incompatible
 	github.com/desertbit/go-shlex v0.1.1
-	github.com/desertbit/readline v1.5.1
 	github.com/fatih/color v1.10.0
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.0 // indirect
@@ -18,5 +18,3 @@ require (
 	golang.org/x/sys v0.0.0-20201214210602-f9fddec55a1e // indirect
 	gopkg.in/AlecAivazis/survey.v1 v1.8.5
 )
-
-replace github.com/desertbit/readline => ../readline
