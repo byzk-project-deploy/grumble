@@ -63,17 +63,12 @@ func (a ArgMap) StringList(long string) []string {
 	if i.Value == nil {
 		return nil
 	}
-	s, ok := i.Value.([]string)
-	if ok {
-		return s
-	}
 
-	s2, ok := i.Value.([]interface{})
+	s, ok := interfaceConvertTpGenericSlice[string](i.Value)
 	if !ok {
 		panic(fmt.Errorf("failed to assert arg '%s' to string list", long))
 	}
 
-	s = interfaceSliceConvertToGenericSlice[string](s2)
 	return s
 }
 
