@@ -96,7 +96,7 @@ func (a ArgMap) BoolList(long string) []bool {
 	if i.Value == nil {
 		return nil
 	}
-	b, ok := i.Value.([]bool)
+	b, ok := interfaceConvertTpGenericSlice[bool](i.Value)
 	if !ok {
 		panic(fmt.Errorf("failed to assert arg '%s' to bool list", long))
 	}
@@ -127,7 +127,7 @@ func (a ArgMap) IntList(long string) []int {
 	if i.Value == nil {
 		return nil
 	}
-	v, ok := i.Value.([]int)
+	v, ok := interfaceConvertTpGenericSlice[int](i.Value)
 	if !ok {
 		panic(fmt.Errorf("failed to assert arg '%s' to int list", long))
 	}
@@ -158,7 +158,7 @@ func (a ArgMap) Int64List(long string) []int64 {
 	if i.Value == nil {
 		return nil
 	}
-	v, ok := i.Value.([]int64)
+	v, ok := interfaceConvertTpGenericSlice[int64](i.Value)
 	if !ok {
 		panic(fmt.Errorf("failed to assert arg '%s' to int64 list", long))
 	}
@@ -189,7 +189,7 @@ func (a ArgMap) UintList(long string) []uint {
 	if i.Value == nil {
 		return nil
 	}
-	v, ok := i.Value.([]uint)
+	v, ok := interfaceConvertTpGenericSlice[uint](i.Value)
 	if !ok {
 		panic(fmt.Errorf("failed to assert arg '%s' to uint list", long))
 	}
@@ -220,7 +220,7 @@ func (a ArgMap) Uint64List(long string) []uint64 {
 	if i.Value == nil {
 		return nil
 	}
-	v, ok := i.Value.([]uint64)
+	v, ok := interfaceConvertTpGenericSlice[uint64](i.Value)
 	if !ok {
 		panic(fmt.Errorf("failed to assert arg '%s' to uint64 list", long))
 	}
@@ -251,7 +251,7 @@ func (a ArgMap) Float64List(long string) []float64 {
 	if i.Value == nil {
 		return nil
 	}
-	v, ok := i.Value.([]float64)
+	v, ok := interfaceConvertTpGenericSlice[float64](i.Value)
 	if !ok {
 		panic(fmt.Errorf("failed to assert arg '%s' to float64 list", long))
 	}
@@ -282,7 +282,7 @@ func (a ArgMap) DurationList(long string) []time.Duration {
 	if i.Value == nil {
 		return nil
 	}
-	v, ok := i.Value.([]time.Duration)
+	v, ok := interfaceConvertTpGenericSlice[time.Duration](i.Value)
 	if !ok {
 		panic(fmt.Errorf("failed to assert arg '%s' to duration list", long))
 	}
