@@ -6,7 +6,7 @@ type ShellTools struct {
 	app *App
 }
 
-func (s *ShellTools) Prompt(prompt promptui.Prompt) (string, error) {
+func (s *ShellTools) Prompt(prompt *promptui.Prompt) (string, error) {
 	prompt.Readline = s.app.rl
 	return prompt.Run()
 }
