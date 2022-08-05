@@ -59,6 +59,7 @@ type App struct {
 	interruptHandler     func(a *App, count int)
 	printASCIILogo       func(a *App)
 	noFindCommandHandler func(a *App, args []string) error
+	shellTools           *ShellTools
 }
 
 // New creates a new app.
@@ -92,6 +93,10 @@ func New(c *Config) (a *App) {
 	// Register the user flags, if present.
 	if c.Flags != nil {
 		c.Flags(&a.flags)
+	}
+
+	a.shellTools = &ShellTools{
+		app: a,
 	}
 
 	return

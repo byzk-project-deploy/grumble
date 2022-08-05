@@ -37,14 +37,17 @@ type Context struct {
 
 	// Cmd is the currently executing command.
 	Command *Command
+
+	ShellTools *ShellTools
 }
 
 func newContext(a *App, cmd *Command, flags FlagMap, args ArgMap) *Context {
 	return &Context{
-		App:     a,
-		Command: cmd,
-		Flags:   flags,
-		Args:    args,
+		App:        a,
+		Command:    cmd,
+		Flags:      flags,
+		Args:       args,
+		ShellTools: a.shellTools,
 	}
 }
 
