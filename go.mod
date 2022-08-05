@@ -3,7 +3,7 @@ module github.com/byzk-project-deploy/grumble
 go 1.18
 
 require (
-	github.com/byzk-project-deploy/promptui v0.0.0-20220805014455-63124bc0d88d
+	github.com/byzk-project-deploy/promptui v0.0.0-20220805015105-d041a40d328b
 	github.com/byzk-project-deploy/readline v1.5.2-0.20220805003149-36f86cdb5dd2
 	github.com/desertbit/closer/v3 v3.1.2
 	github.com/desertbit/columnize v2.1.0+incompatible
