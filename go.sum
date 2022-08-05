@@ -3,6 +3,8 @@ github.com/Netflix/go-expect v0.0.0-20190729225929-0e00d9168667 h1:l2RCK7mjLhjfZ
 github.com/Netflix/go-expect v0.0.0-20190729225929-0e00d9168667/go.mod h1:oX5x61PbNXchhh0oikYAH+4Pcfw5LKv21+Jnpr6r6Pc=
 github.com/byzk-project-deploy/promptui v0.0.0-20220805010552-f228631c1e22 h1:OEW2oSiFwdH+nwWdkW5E9LZfCoi2uXyVYyCeLrWa/tE=
 github.com/byzk-project-deploy/promptui v0.0.0-20220805010552-f228631c1e22/go.mod h1:utmPyM2fLT/Dfbx3srkCPS0wxUMYdre5/Co0Ed+zg0A=
+github.com/byzk-project-deploy/promptui v0.0.0-20220805013130-6f9858efa275 h1:fxDbzTBEolbhVw3gPTOLJGIPU+O/7gcNFJ/JniIvcIw=
+github.com/byzk-project-deploy/promptui v0.0.0-20220805013130-6f9858efa275/go.mod h1:utmPyM2fLT/Dfbx3srkCPS0wxUMYdre5/Co0Ed+zg0A=
 github.com/byzk-project-deploy/readline v1.5.2-0.20220805003149-36f86cdb5dd2 h1:rsq+IL4nR2vnVhz0mJyt7mtlDxnUUYC+iDAfi/9hgjg=
 github.com/byzk-project-deploy/readline v1.5.2-0.20220805003149-36f86cdb5dd2/go.mod h1:etiH79+zD6lHX78/CuiN2lHwBSRcs/Bbwx8ayngXN8M=
 github.com/chzyer/logex v1.1.10 h1:Swpa1K6QvQznwJRcfTfQJmTE72DqScAa40E+fbHEXEE=
