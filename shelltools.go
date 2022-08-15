@@ -29,6 +29,8 @@ func (s *ShellTools) beginKeyboardHandle(keyboardHandleFn func(rune) (rune, bool
 
 		s.app.rl.Config.FuncFilterInputRune = keyboardHandleFn
 
+		s.app.rl.Terminal.KickRead()
+
 		<-s.exitChan
 		s.exitChan <- struct{}{}
 	}()
@@ -40,22 +42,22 @@ func (s *ShellTools) exitKeyboardHandle() {
 	s.app.rl.Terminal.ExitRawMode()
 }
 
-func (s *ShellTools) EnterIgnoreKeyboard() {
-	if s.isIgnoreKeyboard {
-		return
-	}
-	s.isIgnoreKeyboard = true
-	s.beginKeyboardHandle(s.emptyKeyboardFuncFilterInputRune)
-}
-
-func (s *ShellTools) ExitIgnoreKeyboard() {
-	if !s.isIgnoreKeyboard {
-		return
-	}
-
-	s.isIgnoreKeyboard = false
-	s.exitKeyboardHandle()
-}
+//func (s *ShellTools) EnterIgnoreKeyboard() {
+//	if s.isIgnoreKeyboard {
+//		return
+//	}
+//	s.isIgnoreKeyboard = true
+//	s.beginKeyboardHandle(s.emptyKeyboardFuncFilterInputRune)
+//}
+//
+//func (s *ShellTools) ExitIgnoreKeyboard() {
+//	if !s.isIgnoreKeyboard {
+//		return
+//	}
+//
+//	s.isIgnoreKeyboard = false
+//	s.exitKeyboardHandle()
+//}
 
 func (s *ShellTools) Prompt(prompt *promptui.Prompt) (string, error) {
 	prompt.Readline = s.app.rl
@@ -63,8 +65,8 @@ func (s *ShellTools) Prompt(prompt *promptui.Prompt) (string, error) {
 }
 
 func (s *ShellTools) Confirm(label string) (bool, error) {
-	s.beginKeyboardHandle(s.keyboardFuncFilterInputRune)
-	defer s.exitKeyboardHandle()
+	//s.beginKeyboardHandle(s.keyboardFuncFilterInputRune)
+	//defer s.exitKeyboardHandle()
 
 	return pterm.DefaultInteractiveConfirm.Show(label)
 }
