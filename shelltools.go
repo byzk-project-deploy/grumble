@@ -2,6 +2,7 @@ package grumble
 
 import (
 	"atomicgo.dev/keyboard"
+	"fmt"
 	"github.com/byzk-project-deploy/promptui"
 	"github.com/pterm/pterm"
 )
@@ -11,6 +12,7 @@ type ShellTools struct {
 }
 
 func (s *ShellTools) keyboardFuncFilterInputRune(r rune) (rune, bool) {
+	fmt.Println("处罚Key...")
 	_ = keyboard.SimulateKeyPress(r)
 	return 0, false
 }
@@ -21,9 +23,6 @@ func (s *ShellTools) keyboardHandle(exit <-chan struct{}) {
 
 	s.app.rl.Config.FuncFilterInputRune = s.keyboardFuncFilterInputRune
 
-	s.app.rl.Terminal.EnterRawMode()
-	defer s.app.rl.Terminal.ExitRawMode()
-
 	<-exit
 }
 
@@ -33,6 +32,9 @@ func (s *ShellTools) Prompt(prompt *promptui.Prompt) (string, error) {
 }
 
 func (s *ShellTools) Confirm(label string) (bool, error) {
+	s.app.rl.Terminal.EnterRawMode()
+	defer s.app.rl.Terminal.ExitRawMode()
+
 	exitChain := make(chan struct{}, 1)
 	defer close(exitChain)
 

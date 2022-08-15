@@ -27,6 +27,7 @@ package cmd
 import (
 	"github.com/byzk-project-deploy/grumble"
 	"github.com/fatih/color"
+	"os"
 )
 
 var App = grumble.New(&grumble.Config{
@@ -38,6 +39,7 @@ var App = grumble.New(&grumble.Config{
 	HelpHeadlineColor:     color.New(color.FgGreen),
 	HelpHeadlineUnderline: true,
 	HelpSubCommands:       true,
+	Stdin:                 os.Stdin,
 
 	Flags: func(f *grumble.Flags) {
 		f.String("d", "directory", "DEFAULT", "set an alternative root directory path")
