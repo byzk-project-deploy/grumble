@@ -2,28 +2,57 @@ package grumble
 
 import (
 	"atomicgo.dev/keyboard"
-	"fmt"
 	"github.com/byzk-project-deploy/promptui"
 	"github.com/pterm/pterm"
 )
 
 type ShellTools struct {
-	app *App
+	app              *App
+	isIgnoreKeyboard bool
+	exitChan         chan struct{}
+}
+
+func (s *ShellTools) emptyKeyboardFuncFilterInputRune(r rune) (rune, bool) {
+	return 0, false
 }
 
 func (s *ShellTools) keyboardFuncFilterInputRune(r rune) (rune, bool) {
-	fmt.Println("处罚Key...")
 	_ = keyboard.SimulateKeyPress(r)
 	return 0, false
 }
 
-func (s *ShellTools) keyboardHandle(exit <-chan struct{}) {
+func (s *ShellTools) beginKeyboardHandle(keyboardHandleFn func(rune) (rune, bool)) {
+	s.app.rl.Terminal.EnterRawMode()
+
 	rawInputRune := s.app.rl.Config.FuncFilterInputRune
 	defer func() { s.app.rl.Config.FuncFilterInputRune = rawInputRune }()
 
-	s.app.rl.Config.FuncFilterInputRune = s.keyboardFuncFilterInputRune
+	s.app.rl.Config.FuncFilterInputRune = keyboardHandleFn
 
-	<-exit
+	<-s.exitChan
+	s.exitChan <- struct{}{}
+}
+
+func (s *ShellTools) exitKeyboardHandle() {
+	s.exitChan <- struct{}{}
+	<-s.exitChan
+	s.app.rl.Terminal.ExitRawMode()
+}
+
+func (s *ShellTools) EnterIgnoreKeyboard() {
+	if s.isIgnoreKeyboard {
+		return
+	}
+
+	s.beginKeyboardHandle(s.emptyKeyboardFuncFilterInputRune)
+}
+
+func (s *ShellTools) ExitIgnoreKeyboard() {
+	if !s.isIgnoreKeyboard {
+		return
+	}
+
+	s.exitKeyboardHandle()
 }
 
 func (s *ShellTools) Prompt(prompt *promptui.Prompt) (string, error) {
@@ -32,13 +61,8 @@ func (s *ShellTools) Prompt(prompt *promptui.Prompt) (string, error) {
 }
 
 func (s *ShellTools) Confirm(label string) (bool, error) {
-	s.app.rl.Terminal.EnterRawMode()
-	defer s.app.rl.Terminal.ExitRawMode()
-
-	exitChain := make(chan struct{}, 1)
-	defer close(exitChain)
-
-	go s.keyboardHandle(exitChain)
+	s.beginKeyboardHandle(s.keyboardFuncFilterInputRune)
+	defer s.exitKeyboardHandle()
 
 	return pterm.DefaultInteractiveConfirm.Show(label)
 }

@@ -96,7 +96,8 @@ func New(c *Config) (a *App) {
 	}
 
 	a.shellTools = &ShellTools{
-		app: a,
+		app:      a,
+		exitChan: make(chan struct{}, 1),
 	}
 
 	return
