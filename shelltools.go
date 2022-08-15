@@ -44,7 +44,7 @@ func (s *ShellTools) EnterIgnoreKeyboard() {
 	if s.isIgnoreKeyboard {
 		return
 	}
-
+	s.isIgnoreKeyboard = true
 	s.beginKeyboardHandle(s.emptyKeyboardFuncFilterInputRune)
 }
 
@@ -53,6 +53,7 @@ func (s *ShellTools) ExitIgnoreKeyboard() {
 		return
 	}
 
+	s.isIgnoreKeyboard = false
 	s.exitKeyboardHandle()
 }
 
