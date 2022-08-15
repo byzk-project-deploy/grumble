@@ -23,14 +23,15 @@ func (s *ShellTools) keyboardFuncFilterInputRune(r rune) (rune, bool) {
 
 func (s *ShellTools) beginKeyboardHandle(keyboardHandleFn func(rune) (rune, bool)) {
 	s.app.rl.Terminal.EnterRawMode()
+	go func() {
+		rawInputRune := s.app.rl.Config.FuncFilterInputRune
+		defer func() { s.app.rl.Config.FuncFilterInputRune = rawInputRune }()
 
-	rawInputRune := s.app.rl.Config.FuncFilterInputRune
-	defer func() { s.app.rl.Config.FuncFilterInputRune = rawInputRune }()
+		s.app.rl.Config.FuncFilterInputRune = keyboardHandleFn
 
-	s.app.rl.Config.FuncFilterInputRune = keyboardHandleFn
-
-	<-s.exitChan
-	s.exitChan <- struct{}{}
+		<-s.exitChan
+		s.exitChan <- struct{}{}
+	}()
 }
 
 func (s *ShellTools) exitKeyboardHandle() {
